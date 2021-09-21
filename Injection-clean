@@ -1,3 +1,5 @@
+All credits of this injection goes to Stanley-gf (https://github.com/Stanley-GF)
+
 const fs = require('fs');
 const path = require('path');
 const { BrowserWindow, session } = require('electron')
