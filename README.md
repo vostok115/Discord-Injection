@@ -110,7 +110,7 @@ if __name__ == "__main__":
     inject()
 ```
 
-## 🎉・Want to use it but don't know shit about coding?
+## 👴・Want to use it but don't know shit about coding?
 No worries, [Hazard-Token-Grabber-V2](https://github.com/Rdimo/Hazard-Token-Grabber-V2) is a stealer that uses this injection + steals more!
 
 ## 🤝・Contributing
