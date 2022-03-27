@@ -113,6 +113,7 @@ if __name__ == "__main__":
 ## 🤝・Contributing
 
 Any ideas on how to improve the injection? Or just think you got something you want to see being added? [Open a new issue](https://github.com/rdimo/Discord-injection/issues)!
+
 Found a bug? please please please [Open a new issue](https://github.com/rdimo/Discord-injection/issues) and tell me about it so I can fix it asap
 
 ## 🎉・Upcoming/Todo
@@ -127,6 +128,9 @@ Discord-Injection is inspired by [stanleys](https://github.com/Stanley-GF) injec
 ## 📄・License 
 
 This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE.md](./LICENSE) file for details
+
 ✔・Educational purpose only and all your consequences caused by you actions is your responsibility 
+
 ✔・Selling this **Free** injection is forbidden
+
 ✔・If you make a copy of this/or fork it, it **must** be open-source and have credits to this repo
