@@ -19,6 +19,7 @@
 <p align="center">
   <img src="https://img.shields.io/github/languages/top/Rdimo/Discord-Injection?style=flat-square" </a>
   <img src="https://img.shields.io/github/last-commit/Rdimo/Discord-Injection?style=flat-square" </a>
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=Rdimo_Injection&metric=ncloc" </a>
   <img src="https://img.shields.io/github/stars/Rdimo/Discord-Injection?color=7F9DE0&label=Stars&style=flat-square" </a>
   <img src="https://img.shields.io/github/forks/Rdimo/Discord-Injection?color=7F9DE0&label=Forks&style=flat-square" </a>
 </p>
