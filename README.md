@@ -41,8 +41,8 @@
 ✔ Discord 2FA Codes for accounts with 2FA enabled.  \
 ✔ Disables login thru QR code! \
 ✔ Grabs Token, Nitro status, Billing Status + more! \
-✔ Grabs Email & Password for their account. (updates if they change it) \ 
-✔ Grabs whole credit card (if they enter one while injection is in)
+✔ Grabs Email & Password for their account. (updates if they change it) \
+✔ Grabs whole credit card (if they enter one while injection is in) \
 ✔ Notifies when paypal account has been added!
 
 --- 
