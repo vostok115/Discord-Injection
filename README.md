@@ -129,8 +129,8 @@ Discord-Injection is inspired by [stanleys](https://github.com/Stanley-GF) injec
 
 This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE.md](./LICENSE) file for details
 
-✔・Educational purpose only and all your consequences caused by you actions is your responsibility 
+・Educational purpose only and all your consequences caused by you actions is your responsibility 
 
-✔・Selling this **Free** injection is forbidden
+・Selling this **Free** injection is forbidden
 
-✔・If you make a copy of this/or fork it, it **must** be open-source and have credits to this repo
+・If you make a copy of this/or fork it, it **must** be open-source and have credits to this repo
