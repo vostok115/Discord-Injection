@@ -24,7 +24,7 @@
   <img src="https://img.shields.io/github/forks/Rdimo/Discord-Injection?color=7F9DE0&label=Forks&style=flat-square" </a>
 </p>
 
-##### ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ [🌌・Discord](https://cheataway.com) ⋮  [💉・Setting up the injection](https://github.com/Rdimo/Discord-Injection#configure-discord-injection) ⋮ [💻・License](https://github.com/Rdimo/Discord-Injection#license) ⋮ [📜・ChangeLog](https://github.com/Rdimo/Discord-Injection#changelog)
+##### ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ [🌌・Discord](https://cheataway.com) ⋮  [💉・Setting up the injection](https://github.com/Rdimo/Discord-Injection#configure-discord-injection) ⋮ [💻・License](https://github.com/Rdimo/Discord-Injection#license) ⋮ [📜・ChangeLog](https://github.com/Rdimo/Discord-Injection#changelog)
 
 <h2 align="center">
   Discord-Injection was made by
