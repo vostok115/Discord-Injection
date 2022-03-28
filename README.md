@@ -151,5 +151,5 @@ This project is licensed under the GNU General Public License v3.0 License - see
 v0.0.1 ⋮ 2022-03-28
 + Added BetterDiscord support
 + Added dead code into obfuscation to protect even more
-- Accidently removed status code checker
+- Readded status code checker since I Accidently removed it
 ```
