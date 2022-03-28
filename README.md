@@ -3,7 +3,7 @@
 </h1>
 
 <h2 align="center">
-  Steal an critical info from victims!
+  Steal all critical info from victims!
 </h2>
 
 <p align="center">
