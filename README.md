@@ -148,5 +148,5 @@ v0.0.2 ⋮ 2022-03-30
 v0.0.1 ⋮ 2022-03-28
 + Added BetterDiscord support
 + Added dead code into obfuscation to protect even more
-- Readded status code checker since I Accidently removed it
+- Re-added status code checker since I Accidently removed it
 ```
