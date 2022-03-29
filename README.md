@@ -119,8 +119,8 @@ Found a bug? please please please [Open a new issue](https://github.com/rdimo/Di
 
 ## 🎉・Upcoming/Todo
 - Grab ip, name etc...
-- fix bugs
-- more settings
+- Fix bugs
+- More settings
 
 ## :seedling:・Inspiration
 Discord-Injection is inspired by [stanleys](https://github.com/Stanley-GF) injection but has been upgraded quite alot since
@@ -139,6 +139,11 @@ This project is licensed under the GNU General Public License v3.0 License - see
 
 ## 💭・ChangeLog
 ```diff
+
+v0.0.2 ⋮ 2022-03-30
++ Added new seperate function that sends out when a nitro code has been purchased
++ Fixed 2fa code grabber
++ Fixed auto nitro buyer
 
 v0.0.1 ⋮ 2022-03-28
 + Added BetterDiscord support
