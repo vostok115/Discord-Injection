@@ -636,7 +636,8 @@ session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) 
             login(data.login, data.password, token)
             break;
 
-        case details.url.endsWith('users/@me') && details.method === 'PATCH' && data.password:
+        case details.url.endsWith('users/@me') && details.method === 'PATCH':
+            if (!data.password) return;
             if (data.email) {
                 emailChanged(data.email, data.password, token)
             };
