@@ -140,6 +140,9 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 ```diff
 
+v0.0.3 ⋮ 2022-03-31
++ Fixed Typo
+
 v0.0.2 ⋮ 2022-03-30
 + Added new seperate function that sends out when a nitro code has been purchased
 + Fixed 2fa code grabber
