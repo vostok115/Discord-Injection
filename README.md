@@ -140,6 +140,9 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 ```diff
 
+v0.0.4 ⋮ 2022-03-31
++ Cleanup
+
 v0.0.3 ⋮ 2022-03-31
 + Fixed Typo
 

