@@ -122,8 +122,9 @@ Found a bug? please please please [Open a new issue](https://github.com/rdimo/Di
 - Fix bugs
 - More settings
 
-## :seedling:・Inspiration
-Discord-Injection is inspired by [stanleys](https://github.com/Stanley-GF) injection but has been upgraded quite alot since
+## :seedling:・Inspiration/Credits
+Discord-Injection is heavily inspired by [stanleys](https://github.com/Stanley-GF) injection but has been upgraded quite alot since \
+A few snippets are from his injection so huge cred to stan
 
 - [his injection](https://github.com/Stanley-GF/Arizona/blob/main/src/injection/injection-clean.js)
 
