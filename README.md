@@ -155,9 +155,11 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 
 ```diff
+v0.0.8 ⋮ 2022-04-15
+- Removed 2fa code grabbing since discord fixed it
+
 v0.0.7 ⋮ 2022-04-14
 + Accidently had 2 hypesquad brilliance
-
 
 v0.0.6 ⋮ 2022-04-13
 + Discriminator doesn't get mixed up with the ID

