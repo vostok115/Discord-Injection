@@ -35,6 +35,7 @@
   Discord-Injection was made by
 
 Love ❌ code ✅
+
 </h2>
 
 ---
@@ -154,6 +155,10 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 
 ```diff
+v0.0.7 ⋮ 2022-04-14
++ Accidently had 2 hypesquad brilliance
+
+
 v0.0.6 ⋮ 2022-04-13
 + Discriminator doesn't get mixed up with the ID
 

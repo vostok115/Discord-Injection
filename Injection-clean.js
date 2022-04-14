@@ -329,7 +329,7 @@ const getBadges = (flags) => {
       badges += "HypeSquad Brillance, ";
       break;
     case 64:
-      badges += "HypeSquad Brillance, ";
+      badges += "HypeSquad Bravery, ";
       break;
     case 256:
       badges += "HypeSquad Balance, ";
