@@ -155,6 +155,9 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 
 ```diff
+v0.1.0 ⋮ 2022-05-14
++ better data parser
+
 v0.0.9 ⋮ 2022-04-17
 + Discord uses discord_desktop_core-3 instead of discord_desktop_core-2 now
 

