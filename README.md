@@ -129,10 +129,10 @@ Any ideas on how to improve the injection? Or just think you got something you w
 
 Found a bug? please please please [Open a new issue](https://github.com/rdimo/Discord-injection/issues) and tell me about it so I can fix it asap
 
-## 🎉・Upcoming/Todo
+## 🎉・Upcoming/enhancements
 
 - Grab ip, name etc...
-- Fix bugs
+- Grab paypal pass,email (it's possible but only thru a debug func which is hard)
 - More settings
 
 ## :seedling:・Inspiration/Credits
@@ -155,7 +155,10 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 
 ```diff
-v0.1.0 ⋮ 2022-05-14
+v0.1.1 ⋮ 2022-05-14
++ Bypasses discords Control-Access-Origin update
+
+v0.1.0 ⋮ 2022-05-13
 + better data parser
 
 v0.0.9 ⋮ 2022-04-17
