@@ -155,6 +155,9 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 
 ```diff
+v0.1.2 ⋮ 2022-05-18
++ Minor fixes + cleanup
+
 v0.1.1 ⋮ 2022-05-14
 + Bypasses discords Control-Access-Origin update
 
