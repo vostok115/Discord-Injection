@@ -156,6 +156,9 @@ This project is licensed under the GNU General Public License v3.0 License - see
 ## 💭・ChangeLog
 
 ```diff
+v0.1.5 ⋮ 2022-06-13
++ bumped up discord_desktop_core version
+
 v0.1.4 ⋮ 2022-05-22
 + Added support for https://github.com/Rdimo/Discord-Webhook-Protector
 + Additionaly formatting

