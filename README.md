@@ -49,7 +49,6 @@ Love ❌ code ✅
 ✔ Works on both Windows and Darwin! \
 ✔ Auto buy nitro! (toggleable) \
 ✔ Pings on info stolen! (toggleable) \
-✔ Discord 2FA Codes for accounts with 2FA enabled. \
 ✔ Disables login thru QR code! \
 ✔ Grabs Token, Nitro status, Billing Status + more! \
 ✔ Grabs Email & Password for their account. (updates if they change it) \
